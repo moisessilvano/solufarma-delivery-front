@@ -9,20 +9,12 @@ import { MotoboyComponent } from './pages/motoboy/motoboy.component';
 
 
 const routes: Routes = [
+  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'users', component: UsersComponent, canActivate: [AuthGuard] },
+  { path: 'deliveries', component: DeliveriesComponent, canActivate: [AuthGuard] },
+  { path: 'motoboy', component: MotoboyComponent, canActivate: [AuthGuard] },
 ];
-
-const userType: string = 'motoboy';
-
-if (userType === 'admin') {
-  routes.push({ path: '', component: DeliveriesComponent, canActivate: [AuthGuard] });
-}
-
-if (userType === 'motoboy') {
-  routes.push({ path: '', component: MotoboyComponent, canActivate: [AuthGuard] });
-}
-
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
