@@ -21,18 +21,54 @@
                 type="text"
                 class="form-control"
                 formControlName="orderCode"
+                [ngClass]="{
+                  'is-invalid': f.orderCode.errors && f.orderCode.touched
+                }"
               />
+              <div
+                class="invalid-feedback"
+                *ngIf="f.orderCode.errors && f.orderCode.errors.required"
+              >
+                Insira o número do romaneio
+              </div>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label id="orderCode">Número da requisição</label>
+              <label>Número da requisição</label>
               <input
                 type="text"
                 class="form-control"
                 formControlName="requestCode"
+                [ngClass]="{
+                  'is-invalid': f.requestCode.errors && f.requestCode.touched
+                }"
               />
+              <div
+                class="invalid-feedback"
+                *ngIf="f.requestCode.errors && f.requestCode.errors.required"
+              >
+                Insira o número da requisição
+              </div>
             </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Data de entrega</label>
+          <input
+            type="date"
+            class="form-control"
+            formControlName="deliveryDate"
+            [ngClass]="{
+              'is-invalid': f.deliveryDate.errors && f.deliveryDate.touched
+            }"
+          />
+          <div
+            class="invalid-feedback"
+            *ngIf="f.deliveryDate.errors && f.deliveryDate.errors.required"
+          >
+            Insira a data de entrega
           </div>
         </div>
 
@@ -42,7 +78,16 @@
             type="text"
             class="form-control"
             formControlName="customerName"
+            [ngClass]="{
+              'is-invalid': f.customerName.errors && f.customerName.touched
+            }"
           />
+          <div
+            class="invalid-feedback"
+            *ngIf="f.customerName.errors && f.customerName.errors.required"
+          >
+            Insira o nome do cliente
+          </div>
         </div>
         <div class="form-group">
           <label>Endereço completo</label>
@@ -50,7 +95,16 @@
             type="text"
             class="form-control"
             formControlName="fullAddress"
+            [ngClass]="{
+              'is-invalid': f.fullAddress.errors && f.fullAddress.touched
+            }"
           ></textarea>
+          <div
+            class="invalid-feedback"
+            *ngIf="f.fullAddress.errors && f.fullAddress.errors.required"
+          >
+            Insira o endereço de entrega
+          </div>
         </div>
       </div>
     </div>

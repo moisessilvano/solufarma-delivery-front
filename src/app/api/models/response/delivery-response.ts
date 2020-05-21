@@ -1,6 +1,7 @@
 export class DeliveryResponse {
     _id: string;
     orderCode: string;
+    requestCode: string;
     deliveryDate: string;
     fullAddress: string;
     customerCode: string;

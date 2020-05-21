@@ -13,6 +13,7 @@ export class EditDeliveryModalComponent implements OnInit {
   @Input() id;
 
   form = new FormGroup({
+    deliveryDate: new FormControl('', Validators.required),
     orderCode: new FormControl('', Validators.required),
     requestCode: new FormControl('', Validators.required),
     customerName: new FormControl('', Validators.required),
@@ -32,6 +33,8 @@ export class EditDeliveryModalComponent implements OnInit {
       this.getDelivery();
     }
   }
+
+  get f() { return this.form.controls; }
 
   getDelivery() {
     this.deliveryService.getById(this.id).subscribe(res => this.form.patchValue(res));
