@@ -38,8 +38,6 @@ export class DeliveriesComponent implements OnInit {
       initialDate: this.initialDate,
       finalDate: '',
     })
-
-    this.add();
   }
 
   get f() { return this.searchForm.controls; }
