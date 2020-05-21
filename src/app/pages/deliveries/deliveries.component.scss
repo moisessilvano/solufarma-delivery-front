@@ -1,0 +1,12 @@
+.logo {
+  width: 100%;
+  max-width: 300px;
+}
+
+.actions {
+  text-align: right;
+
+  @media (max-width: 768px) {
+    text-align: center;
+  }
+}

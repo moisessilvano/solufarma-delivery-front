@@ -1,0 +1,81 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 text-center py-2">
+      <img src="../../../assets/logo.png" class="logo" />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <app-navbar></app-navbar>
+    </div>
+  </div>
+  <form
+    class="row pb-3"
+    [formGroup]="searchForm"
+    (ngSubmit)="searchDeliveries()"
+  >
+    <div class="col-md-2">
+      <div class="form-group">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Romaneio"
+          formArrayName="orderCode"
+        />
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Nome do cliente"
+          formArrayName="customerName"
+        />
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="input-group mb-3">
+        <input
+          type="date"
+          class="form-control"
+          formControlName="deliveryDate"
+        />
+        <div class="input-group-append">
+          <button
+            class="btn btn-secondary"
+            type="submit"
+            placement="bottom"
+            ngbTooltip="Pesquisar"
+          >
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col actions">
+      <button
+        type="button"
+        class="btn btn-success mx-2"
+        placement="bottom"
+        ngbTooltip="Baixar planilha"
+      >
+        <i class="fa fa-download"></i>
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary mx-2"
+        placement="bottom"
+        ngbTooltip="Agendar nova entrega"
+      >
+        <i class="fa fa-plus"></i>
+      </button>
+    </div>
+  </form>
+  <div class="row"></div>
+  <div class="row">
+    <div class="col-md-12" *ngFor="let d of deliveryList; let i = index">
+      <app-delivery [delivery]="d" [index]="i"></app-delivery>
+    </div>
+  </div>
+</div>

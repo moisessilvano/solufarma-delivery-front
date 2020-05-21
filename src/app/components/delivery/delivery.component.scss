@@ -1,0 +1,54 @@
+.delivery {
+  margin: 0;
+  padding: 15px 0;
+
+  .actions {
+    text-align: right;
+  }
+
+  @media (max-width: 768px) {
+    text-align: center;
+
+    .line {
+      margin: 5px 0;
+    }
+
+    .actions {
+      text-align: center;
+    }
+  }
+}
+
+.delivery--pair {
+  background-color: #e9ecef;
+}
+
+.status {
+  padding: 10px;
+  text-align: center;
+  font-size: 0.85rem;
+  border-radius: 10px;
+}
+
+.status--pending {
+  background-color: rgb(238, 238, 0);
+}
+
+.status--motoboy {
+  background-color: rgb(0, 99, 180);
+  color: #fff;
+}
+
+.status--delived {
+  background-color: rgb(0, 129, 9);
+  color: #fff;
+}
+
+.status--canceled {
+  background-color: #c82333;
+  color: #fff;
+}
+
+.btn {
+  margin: 0 5px;
+}

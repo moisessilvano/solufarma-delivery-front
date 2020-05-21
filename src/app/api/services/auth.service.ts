@@ -7,7 +7,7 @@ import { AuthRequest } from '../models/request/auth-request';
 @Injectable({
     providedIn: 'root'
 })
-export class UserService {
+export class AuthService {
     private apiUrl = environment.apiUrl + '/auth';
     userIsLogged: boolean;
 

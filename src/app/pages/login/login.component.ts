@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AuthService } from '../../../app/api/services/auth.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -8,11 +9,35 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class LoginComponent implements OnInit {
 
+  isSubmitted: boolean;
+
+  form = new FormGroup({
+    username: new FormControl('moises', Validators.required),
+    password: new FormControl('moises', Validators.required)
+  })
+
   constructor(
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
+  }
+
+  onSubmit() {
+    if (this.form.invalid) {
+      this.toastr.error('Revise seus dados e tente novamente!', 'Algo de errado aconteceu')
+      return;
+    }
+
+    this.isSubmitted = true;
+
+    this.authService.login(this.form.value).subscribe(res => { }, err => {
+      const { error } = err;
+      if (error && error.message) {
+        this.toastr.error(error.message);
+      }
+    })
   }
 
 }
