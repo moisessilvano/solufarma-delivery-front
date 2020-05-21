@@ -29,8 +29,8 @@ export class DeliveryService {
         return this.http.put<any>(`${this.apiUrl}/completeDelivery/${id}`, {});
     }
 
-    getByDate(date: string): Observable<DeliveryResponse[]> {
-        return this.http.get<any>(`${this.apiUrl}/getByDate/${date}`);
+    getByDate(params: any): Observable<DeliveryResponse[]> {
+        return this.http.get<any>(`${this.apiUrl}/getByDate`, { params: params });
     }
 
     getByOrder(orderCode: string): Observable<DeliveryResponse[]> {

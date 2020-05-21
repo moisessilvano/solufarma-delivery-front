@@ -9,47 +9,41 @@
       <app-navbar></app-navbar>
     </div>
   </div>
-  <form
-    class="row pb-3"
-    [formGroup]="searchForm"
-    (ngSubmit)="searchDeliveries()"
-  >
-    <div class="col-md-2">
-      <div class="form-group">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Romaneio"
-          formControlName="orderCode"
-        />
-      </div>
-    </div>
+  <form class="row pb-3" [formGroup]="searchForm" (ngSubmit)="getDeliveries()">
     <div class="col-md-3">
       <div class="form-group">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Nome do cliente"
-          formArrayName="customerName"
-        />
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="input-group mb-3">
+        <label>Data Inicial</label>
         <input
           type="date"
           class="form-control"
-          formControlName="deliveryDate"
+          formControlName="initialDate"
+          [ngClass]="{
+            'is-invalid': f.initialDate.errors && f.initialDate.touched
+          }"
         />
-        <div class="input-group-append">
-          <button
-            class="btn btn-secondary"
-            type="submit"
-            placement="bottom"
-            ngbTooltip="Pesquisar"
-          >
-            <i class="fa fa-search"></i>
-          </button>
+        <div
+          class="invalid-feedback"
+          *ngIf="f.initialDate.errors && f.initialDate.errors.required"
+        >
+          Insira data uma data
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+        <label>Data Final</label>
+        <div class="input-group mb-3">
+          <input type="date" class="form-control" formControlName="finalDate" />
+          <div class="input-group-append">
+            <button
+              class="btn btn-secondary"
+              type="submit"
+              placement="bottom"
+              ngbTooltip="Pesquisar"
+            >
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -75,8 +69,20 @@
   </form>
   <div class="row"></div>
   <div class="row">
+    <div class="col-12 text-center mb-2" *ngIf="deliveryList.length == 0">
+      <h4 *ngIf="initialDate && !finalDate">
+        Exibindo de {{ formatDate(initialDate) }}
+      </h4>
+      <h4 *ngIf="initialDate && finalDate">
+        Exibindo de {{ formatDate(initialDate) }} á
+        {{ formatDate(finalDate) }}
+      </h4>
+    </div>
     <div class="col-md-12" *ngFor="let d of deliveryList; let i = index">
       <app-delivery [delivery]="d" [index]="i"></app-delivery>
+    </div>
+    <div class="col-12 text-center" *ngIf="deliveryList.length == 0">
+      <h4>Nenhuma entrega encontrada</h4>
     </div>
   </div>
 </div>
