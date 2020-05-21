@@ -1,3 +1,5 @@
+import { UserResponse } from './user-response';
+
 export class DeliveryResponse {
     _id: string;
     orderCode: string;
@@ -14,6 +16,8 @@ export class DeliveryResponse {
     arrivalDate: string;
     arrivalTime: string;
     arrivalTemperature: string;
+
+    deliveredUser: UserResponse;
 
     status: 'canceled' | 'pending' | 'motoboy' | 'delivered';
     createAt: string;

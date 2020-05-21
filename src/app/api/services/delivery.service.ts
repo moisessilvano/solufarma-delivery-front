@@ -33,8 +33,8 @@ export class DeliveryService {
         return this.http.get<any>(`${this.apiUrl}/getByDate`, { params: params });
     }
 
-    getByOrder(orderCode: string): Observable<DeliveryResponse[]> {
-        return this.http.get<any>(`${this.apiUrl}/getByDate/${orderCode}`);
+    getByOrder(orderCode: string): Observable<DeliveryResponse> {
+        return this.http.get<any>(`${this.apiUrl}/getByOrder/${orderCode}`);
     }
 
     getById(id: string): Observable<DeliveryResponse> {

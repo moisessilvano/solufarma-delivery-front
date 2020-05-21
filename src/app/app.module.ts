@@ -19,6 +19,8 @@ import { EditDeliveryModalComponent } from './modals/edit-delivery-modal/edit-de
 import { UsersComponent } from './pages/users/users.component';
 import { HttpsRequestInterceptor } from './interceptors/https-request.interceptor';
 import { EditUserModalComponent } from './modals/edit-user-modal/edit-user-modal.component';
+import { MotoboyComponent } from './pages/motoboy/motoboy.component';
+import { NgxLoadingModule } from 'ngx-loading';
 
 const config: SocketIoConfig = {
   url: environment.apiUrl,
@@ -34,7 +36,8 @@ const config: SocketIoConfig = {
     NavbarComponent,
     EditDeliveryModalComponent,
     UsersComponent,
-    EditUserModalComponent
+    EditUserModalComponent,
+    MotoboyComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +48,8 @@ const config: SocketIoConfig = {
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    NgxLoadingModule.forRoot({})
   ],
   providers: [
     {

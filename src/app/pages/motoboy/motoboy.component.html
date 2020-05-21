@@ -1,0 +1,73 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 text-center py-2">
+      <img src="../../../assets/logo.png" class="logo" />
+    </div>
+  </div>
+  <form
+    class="row pb-3 mt-3 pt-3"
+    [formGroup]="form"
+    (ngSubmit)="searchRomaneio()"
+    autocomplete="off"
+  >
+    <ngx-loading
+      [show]="loading"
+      [config]="{ backdropBorderRadius: '3px' }"
+    ></ngx-loading>
+
+    <div class="col-md-6 offset-md-3" *ngIf="!delivery">
+      <div class="form-group text-center">
+        <h3 class="pb-3">Digite o número do romaneio</h3>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="orderCode"
+          [ngClass]="{
+            'is-invalid': f.orderCode.errors && f.orderCode.touched
+          }"
+        />
+        <div
+          class="invalid-feedback"
+          *ngIf="f.orderCode.errors && f.orderCode.errors.required"
+        >
+          Insira o número do romaneio
+        </div>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary w-100">Localizar</button>
+      </div>
+    </div>
+  </form>
+  <div class="row pt-2 text-center" *ngIf="delivery">
+    <div class="col-12 pb-3">
+      <h5>Dados da entrega</h5>
+    </div>
+    <div class="col-12 py-1">
+      <b>{{ delivery.orderCode }}</b>
+    </div>
+    <div class="col-12 py-1">
+      {{ delivery.customerName }}
+    </div>
+    <div class="col-12 py-1">
+      {{ delivery.fullAddress }}
+    </div>
+    <div class="col-12 py-3" *ngIf="delivery.deliveredUser">
+      Essa entrega foi concluida por
+      <b>{{ delivery.deliveredUser.name }}</b> em
+      {{ formatDate(delivery.arrivalDate) }}
+    </div>
+    <div class="col-12 py-2">
+      <button
+        class="btn btn-primary w-100"
+        (click)="completeDelivery()"
+        [disabled]="delivery.deliveredUser"
+      >
+        Confirmar Entrega
+      </button>
+
+      <div class="py-3">
+        <a href="#" (click)="goToSearch()">Voltar</a>
+      </div>
+    </div>
+  </div>
+</div>
