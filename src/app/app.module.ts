@@ -21,11 +21,15 @@ import { HttpsRequestInterceptor } from './interceptors/https-request.intercepto
 import { EditUserModalComponent } from './modals/edit-user-modal/edit-user-modal.component';
 import { MotoboyComponent } from './pages/motoboy/motoboy.component';
 import { NgxLoadingModule } from 'ngx-loading';
+import { JwtModule } from "@auth0/angular-jwt";
 
 const config: SocketIoConfig = {
   url: environment.apiUrl,
 };
 
+export function tokenGetter() {
+  return localStorage.getItem("token");
+}
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,7 +53,14 @@ const config: SocketIoConfig = {
     ReactiveFormsModule,
     HttpClientModule,
     NgbModule,
-    NgxLoadingModule.forRoot({})
+    NgxLoadingModule.forRoot({}),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: [],
+        blacklistedRoutes: [],
+      },
+    }),
   ],
   providers: [
     {

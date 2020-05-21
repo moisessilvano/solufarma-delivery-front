@@ -17,7 +17,12 @@
 
     <div class="col-md-6 offset-md-3" *ngIf="!delivery">
       <div class="form-group text-center">
-        <h3 class="pb-3">Digite o número do romaneio</h3>
+        <div>
+          <span>Olá, {{ decodeToken.name }}</span>
+          / <a href="#" (click)="logout()">Desconectar</a>
+        </div>
+
+        <h3 class="py-3">Digite o número do romaneio</h3>
         <input
           type="text"
           class="form-control"
