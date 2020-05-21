@@ -1,0 +1,94 @@
+<div class="modal-header">
+  <h4 class="modal-title">Usuarío</h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label id="name">Nome</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="name"
+            [ngClass]="{ 'is-invalid': f.name.errors && f.name.touched }"
+          />
+          <div
+            class="invalid-feedback"
+            *ngIf="f.name.errors && f.name.errors.required"
+          >
+            Digite nome do usuário
+          </div>
+        </div>
+        <div class="form-group">
+          <label id="username">Login</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="username"
+            [ngClass]="{
+              'is-invalid': f.username.errors && f.username.touched
+            }"
+            pattern="[a-zA-Z0-9]+"
+          />
+          <div
+            class="invalid-feedback"
+            *ngIf="f.username.errors && f.username.errors.required"
+          >
+            Digite o login do usuário
+          </div>
+        </div>
+        <div class="form-group">
+          <label id="password">Senha</label>
+          <input
+            type="password"
+            class="form-control"
+            formControlName="password"
+            [ngClass]="{
+              'is-invalid': f.password.errors && f.password.touched
+            }"
+          />
+          <div
+            class="invalid-feedback"
+            *ngIf="f.password.errors && f.password.errors.required"
+          >
+            Digite a senha do usuário
+          </div>
+        </div>
+        <div class="form-group">
+          <label id="name">Tipo de usuário</label>
+          <select formControlName="type" class="form-control">
+            <option value="admin">Administrador</option>
+            <option value="motboy">Motoboy</option>
+          </select>
+          <div
+            class="invalid-feedback"
+            *ngIf="f.password.errors && f.password.errors.required"
+          >
+            Selecione o tipo de usuário
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button
+    type="button"
+    class="btn btn-outline-dark"
+    (click)="activeModal.close('Close click')"
+  >
+    Fechar
+  </button>
+  <button type="button" class="btn btn-primary" (click)="onSubmit()">
+    Salvar
+  </button>
+</div>

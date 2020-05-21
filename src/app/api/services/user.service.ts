@@ -31,4 +31,8 @@ export class UserService {
         return this.http.get<any>(`${this.apiUrl}/${id}`);
     }
 
+    delete(id: string) {
+        return this.http.delete<any>(`${this.apiUrl}/${id}`);
+    }
+
 }

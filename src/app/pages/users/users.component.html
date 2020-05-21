@@ -1,0 +1,64 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 text-center py-2">
+      <img src="../../../assets/logo.png" class="logo" />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <app-navbar></app-navbar>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col text-right">
+      <button
+        type="button"
+        class="btn btn-primary mx-2"
+        placement="bottom"
+        ngbTooltip="Cadastrar novo usuário"
+        (click)="add()"
+      >
+        <i class="fa fa-plus"></i>
+      </button>
+    </div>
+  </div>
+  <div class="row mt-2">
+    <div class="col">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Nome</th>
+            <th scope="col">Login</th>
+            <th scope="col">Função</th>
+            <th scope="col">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td>{{ user.name }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.type }}</td>
+            <td>
+              <button
+                class="btn btn-secondary"
+                (click)="edit(user._id)"
+                placement="bottom"
+                ngbTooltip="Editar"
+              >
+                <i class="fa fa-edit"></i>
+              </button>
+              <button
+                class="btn btn-danger"
+                (click)="remove(user._id)"
+                placement="bottom"
+                ngbTooltip="Cancelar"
+              >
+                <i class="fa fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

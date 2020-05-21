@@ -10,12 +10,15 @@ import { environment } from 'src/environments/environment';
 import { ToastrModule } from "ngx-toastr";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DeliveriesComponent } from './pages/deliveries/deliveries.component';
 import { DeliveryComponent } from './components/delivery/delivery.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { EditDeliveryModalComponent } from './modals/edit-delivery-modal/edit-delivery-modal.component';
+import { UsersComponent } from './pages/users/users.component';
+import { HttpsRequestInterceptor } from './interceptors/https-request.interceptor';
+import { EditUserModalComponent } from './modals/edit-user-modal/edit-user-modal.component';
 
 const config: SocketIoConfig = {
   url: environment.apiUrl,
@@ -29,7 +32,9 @@ const config: SocketIoConfig = {
     DeliveriesComponent,
     DeliveryComponent,
     NavbarComponent,
-    EditDeliveryModalComponent
+    EditDeliveryModalComponent,
+    UsersComponent,
+    EditUserModalComponent
   ],
   imports: [
     BrowserModule,
@@ -42,10 +47,17 @@ const config: SocketIoConfig = {
     HttpClientModule,
     NgbModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpsRequestInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
   entryComponents: [
-    EditDeliveryModalComponent
+    EditDeliveryModalComponent,
+    EditUserModalComponent
   ]
 })
 export class AppModule { }

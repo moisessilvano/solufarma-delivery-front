@@ -6,7 +6,7 @@ import { UserRequest } from '../models/request/user-request';
 @Injectable({
     providedIn: 'root'
 })
-export class UserService {
+export class ProcessService {
     private apiUrl = environment.apiUrl + '/api/process';
 
     constructor(

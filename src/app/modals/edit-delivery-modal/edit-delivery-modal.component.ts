@@ -37,6 +37,7 @@ export class EditDeliveryModalComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.form.value)
     if (this.form.invalid) {
       this.toastr.error('Revise os dados e tente novamente!', 'Formulário inválido')
       return;
