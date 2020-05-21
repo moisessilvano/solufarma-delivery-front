@@ -5,13 +5,15 @@ export class DeliveryResponse {
     fullAddress: string;
     customerCode: string;
     customerName: string;
-    outletTemperature: string;
-    deliveryTemperature: string;
-    deliveredIn: string;
-    deliveredUser: {
-        _id: string;
-        name: string;
-    };
+
+    departureDate: string;
+    departureTime: string;
+    departureTemperature: string;
+
+    arrivalDate: string;
+    arrivalTime: string;
+    arrivalTemperature: string;
+
     status: 'canceled' | 'pending' | 'motoboy' | 'delivered';
     createAt: string;
     updateAt: string;

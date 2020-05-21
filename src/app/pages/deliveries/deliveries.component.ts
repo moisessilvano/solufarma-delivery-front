@@ -38,6 +38,8 @@ export class DeliveriesComponent implements OnInit {
       initialDate: this.initialDate,
       finalDate: '',
     })
+
+    this.add();
   }
 
   get f() { return this.searchForm.controls; }
@@ -52,7 +54,7 @@ export class DeliveriesComponent implements OnInit {
     })
   }
 
-  add(id: string) {
+  add() {
     const modalRef = this.modalService.open(EditDeliveryModalComponent);
     modalRef.result.then(() => {
       this.getDeliveries();

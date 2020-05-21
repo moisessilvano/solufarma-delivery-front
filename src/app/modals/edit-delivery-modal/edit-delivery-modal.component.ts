@@ -14,14 +14,15 @@ export class EditDeliveryModalComponent implements OnInit {
 
   form = new FormGroup({
     orderCode: new FormControl('', Validators.required),
+    requestCode: new FormControl('', Validators.required),
     customerName: new FormControl('', Validators.required),
     fullAddress: new FormControl('', Validators.required),
-    minTemperature: new FormControl(''),
-    maxTemperature: new FormControl(''),
-    minHumidity: new FormControl(''),
-    maxHumidity: new FormControl(''),
-    deliveredIn: new FormControl(''),
-    deliveredUser: new FormControl(''),
+    departureDate: new FormControl(''),
+    departureTime: new FormControl(''),
+    departureTemperature: new FormControl(''),
+    arrivalDate: new FormControl(''),
+    arrivalTime: new FormControl(''),
+    arrivalTemperature: new FormControl('')
   })
 
   constructor(public activeModal: NgbActiveModal, private deliveryService: DeliveryService, private toastr: ToastrService) { }
