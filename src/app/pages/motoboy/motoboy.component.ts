@@ -24,6 +24,8 @@ export class MotoboyComponent implements OnInit {
 
   decodeToken: any;
 
+  receivedBy: string;
+
   constructor(
     private deliveryService: DeliveryService,
     private toastr: ToastrService,
@@ -62,7 +64,9 @@ export class MotoboyComponent implements OnInit {
 
   completeDelivery() {
     this.loading = true;
-    this.deliveryService.completeDelivery(this.delivery._id).subscribe(res => {
+    this.deliveryService.completeDelivery(this.delivery._id, {
+      receivedBy: this.receivedBy
+    }).subscribe(res => {
       this.toastr.success('Entrega concluída com sucesso!');
       this.goToSearch();
       this.loading = false;

@@ -9,12 +9,10 @@ export class DeliveryResponse {
     customerCode: string;
     customerName: string;
 
-    departureDate: string;
-    departureTime: string;
+    departureDateTime: string;
     departureTemperature: string;
 
-    arrivalDate: string;
-    arrivalTime: string;
+    arrivalDateTime: string;
     arrivalTemperature: string;
 
     deliveredUser: UserResponse;
@@ -22,4 +20,6 @@ export class DeliveryResponse {
     status: 'canceled' | 'pending' | 'motoboy' | 'delivered';
     createAt: string;
     updateAt: string;
+
+    receivedBy: string;
 }

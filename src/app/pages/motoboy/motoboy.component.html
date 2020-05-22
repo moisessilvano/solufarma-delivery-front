@@ -61,6 +61,12 @@
       <b>{{ delivery.deliveredUser.name }}</b> em
       {{ formatDate(delivery.arrivalDate) }}
     </div>
+    <div class="col-12 py-2" *ngIf="!delivery.deliveredUser">
+      <div class="form-group">
+        <label>Recebido por:</label>
+        <input type="text" [(ngModel)]="receivedBy" class="form-control" />
+      </div>
+    </div>
     <div class="col-12 py-2">
       <button
         class="btn btn-primary w-100"

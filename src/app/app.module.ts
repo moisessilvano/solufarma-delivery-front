@@ -22,6 +22,7 @@ import { EditUserModalComponent } from './modals/edit-user-modal/edit-user-modal
 import { MotoboyComponent } from './pages/motoboy/motoboy.component';
 import { NgxLoadingModule } from 'ngx-loading';
 import { JwtModule } from "@auth0/angular-jwt";
+import { UploadModalComponent } from './modals/upload-modal/upload-modal.component';
 
 const config: SocketIoConfig = {
   url: environment.apiUrl,
@@ -41,7 +42,8 @@ export function tokenGetter() {
     EditDeliveryModalComponent,
     UsersComponent,
     EditUserModalComponent,
-    MotoboyComponent
+    MotoboyComponent,
+    UploadModalComponent
   ],
   imports: [
     BrowserModule,
@@ -72,7 +74,8 @@ export function tokenGetter() {
   bootstrap: [AppComponent],
   entryComponents: [
     EditDeliveryModalComponent,
-    EditUserModalComponent
+    EditUserModalComponent,
+    UploadModalComponent
   ]
 })
 export class AppModule { }

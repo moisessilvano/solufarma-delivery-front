@@ -14,7 +14,10 @@ export class ProcessService {
     ) { }
 
     importFile(file: any) {
-        return this.http.post<any>(`${this.apiUrl}/importFile`, { file });
+        const formData = new FormData();
+        formData.append('file', file);
+
+        return this.http.post<any>(`${this.apiUrl}/importFile`, formData);
     }
 
 }

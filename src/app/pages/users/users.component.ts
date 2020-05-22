@@ -14,6 +14,8 @@ export class UsersComponent implements OnInit {
 
   users: UserResponse[] = [];
 
+  loading: boolean;
+
   constructor(
     private userService: UserService,
     private modalService: NgbModal,
@@ -25,7 +27,13 @@ export class UsersComponent implements OnInit {
   }
 
   getAll() {
-    this.userService.getAll({}).subscribe(res => this.users = res);
+    this.loading = true;
+    this.userService.getAll({}).subscribe(res => {
+      this.users = res
+      this.loading = false;
+    }, err => {
+      this.loading = false;
+    });
   }
 
   add() {

@@ -10,6 +10,7 @@ import { AuthService } from '../../../app/api/services/auth.service';
 export class LoginComponent implements OnInit {
 
   isSubmitted: boolean;
+  loading: boolean;
 
   form = new FormGroup({
     username: new FormControl('moises', Validators.required),
@@ -30,9 +31,14 @@ export class LoginComponent implements OnInit {
       return;
     }
 
+    this.loading = true;
+
     this.isSubmitted = true;
 
-    this.authService.login(this.form.value).subscribe(res => { }, err => {
+    this.authService.login(this.form.value).subscribe(res => {
+      this.loading = false;
+    }, err => {
+      this.loading = false;
       const { error } = err;
       if (error && error.message) {
         this.toastr.error(error.message);

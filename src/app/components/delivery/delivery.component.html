@@ -1,53 +1,72 @@
 <div class="row delivery" [ngClass]="{ 'delivery--pair': index % 2 == 0 }">
-  <div class="col-md-1 line">
-    {{ delivery.orderCode }}
+  <div class="col-12">
+    <div class="row">
+      <div class="col-md-1 line text-center">
+        {{ delivery.orderCode }}
+        <small>{{ formatDate(delivery.deliveryDate) }}</small>
+      </div>
+      <div class="col-md-3 line">
+        {{ delivery.customerName }}
+      </div>
+      <div class="col-md-4 line">
+        {{ delivery.fullAddress }}
+      </div>
+      <div class="col-md-1 line">
+        <span
+          *ngIf="delivery.status == 'canceled'"
+          class="status status--canceled"
+          >CANCELADO</span
+        >
+        <span
+          *ngIf="delivery.status == 'pending'"
+          class="status status--pending"
+          >PENDENTE</span
+        >
+        <span
+          *ngIf="delivery.status == 'motoboy'"
+          class="status status--motoboy"
+          >COM MOTOBOY</span
+        >
+        <span
+          *ngIf="delivery.status == 'delivered'"
+          class="status status--delived"
+          >ENTREGUE</span
+        >
+      </div>
+      <div class="col-md-2 line actions">
+        <button
+          class="btn btn-secondary"
+          (click)="edit(delivery._id)"
+          placement="bottom"
+          ngbTooltip="Editar"
+        >
+          <i class="fa fa-edit"></i>
+        </button>
+        <!-- <button
+          class="btn btn-danger"
+          (click)="cancel(delivery._id)"
+          placement="bottom"
+          ngbTooltip="Cancelar"
+          *ngIf="delivery.status != 'canceled'"
+        >
+          <i class="fa fa-ban"></i>
+        </button>
+        <button
+          class="btn btn-primary"
+          (click)="enable(delivery._id)"
+          placement="bottom"
+          ngbTooltip="Habilitar"
+          *ngIf="delivery.status == 'canceled'"
+        >
+          <i class="fa fa-check-circle"></i>
+        </button> -->
+      </div>
+    </div>
   </div>
-  <div class="col-md-3 line">
-    {{ delivery.customerName }}
-  </div>
-  <div class="col-md-4 line">
-    {{ delivery.fullAddress }}
-  </div>
-  <div class="col-md-1 line">
-    <span *ngIf="delivery.status == 'canceled'" class="status status--canceled"
-      >CANCELADO</span
-    >
-    <span *ngIf="delivery.status == 'pending'" class="status status--pending"
-      >PENDENTE</span
-    >
-    <span *ngIf="delivery.status == 'motoboy'" class="status status--motoboy"
-      >COM MOTOBOY</span
-    >
-    <span *ngIf="delivery.status == 'delivered'" class="status status--delived"
-      >ENTREGUE</span
-    >
-  </div>
-  <div class="col-md-2 line actions">
-    <button
-      class="btn btn-secondary"
-      (click)="edit(delivery._id)"
-      placement="bottom"
-      ngbTooltip="Editar"
-    >
-      <i class="fa fa-edit"></i>
-    </button>
-    <button
-      class="btn btn-danger"
-      (click)="cancel(delivery._id)"
-      placement="bottom"
-      ngbTooltip="Cancelar"
-      *ngIf="delivery.status != 'canceled'"
-    >
-      <i class="fa fa-ban"></i>
-    </button>
-    <button
-      class="btn btn-primary"
-      (click)="enable(delivery._id)"
-      placement="bottom"
-      ngbTooltip="Habilitar"
-      *ngIf="delivery.status == 'canceled'"
-    >
-      <i class="fa fa-check-circle"></i>
-    </button>
+  <div class="col-12 text-center py-1" *ngIf="delivery.deliveredUser">
+    <small> Entregue por {{ delivery.deliveredUser.name }} </small>
+    <small *ngIf="delivery.receivedBy">
+      / Recebido por {{ delivery.receivedBy }}
+    </small>
   </div>
 </div>

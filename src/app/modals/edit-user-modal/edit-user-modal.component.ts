@@ -18,7 +18,9 @@ export class EditUserModalComponent implements OnInit {
     username: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9!@#$%^&*()]+$/)]),
     password: new FormControl('', Validators.required),
     type: new FormControl('', Validators.required),
-  })
+  });
+
+  loading: boolean;
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -45,15 +47,19 @@ export class EditUserModalComponent implements OnInit {
       return;
     }
 
+    this.loading = true;
+
     if (this.id) {
       this.userService.update(this.id, this.form.value).subscribe(res => {
         this.toastr.success('Editado com sucesso');
         this.activeModal.close();
+        this.loading = false;
       })
     } else {
       this.userService.create(this.form.value).subscribe(res => {
         this.toastr.success('Cadastrado com sucesso');
         this.activeModal.close();
+        this.loading = false;
       })
     }
   }

@@ -1,0 +1,42 @@
+<div class="modal-header">
+  <h4 class="modal-title">Enviar arquivo</h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col">
+      <div class="form-group">
+        <label id="name">Arquivo</label>
+        <input
+          type="file"
+          class="form-control"
+          (change)="onFileChange($event)"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button
+    type="button"
+    class="btn btn-outline-dark"
+    (click)="activeModal.close('Close click')"
+  >
+    Fechar
+  </button>
+  <button type="button" class="btn btn-primary" (click)="onSubmit()">
+    Enviar
+  </button>
+</div>
+
+<ngx-loading
+  [show]="loading"
+  [config]="{ backdropBorderRadius: '3px' }"
+></ngx-loading>

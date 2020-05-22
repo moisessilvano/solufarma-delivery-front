@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { DeliveryResponse } from 'src/app/api/models/response/delivery-response';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EditDeliveryModalComponent } from 'src/app/modals/edit-delivery-modal/edit-delivery-modal.component';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-delivery',
@@ -30,6 +31,10 @@ export class DeliveryComponent implements OnInit {
 
   enable(id: string) {
 
+  }
+
+  formatDate(date) {
+    return moment(date).format("DD/MM/YYYY");
   }
 
 }

@@ -9,6 +9,19 @@
       <app-navbar></app-navbar>
     </div>
   </div>
+  <div class="row" *ngIf="uploadInfo.status">
+    <div class="col text-right">
+      <span *ngIf="uploadInfo.status == 'pending'">
+        <img src="../../../assets/loading.gif" width="50px" />
+      </span>
+      <span *ngIf="uploadInfo.status == 'finish'" class="status status--success"
+        >FINALIZADO</span
+      >
+      {{ uploadInfo.count }} TOTAL / {{ uploadInfo.qntRemaining }} RESTANTE(S) /
+      {{ uploadInfo.qntAdded }} ADICIONADO(S) /
+      {{ uploadInfo.qntUpdated }} ATUALIZADO(S)
+    </div>
+  </div>
   <form class="row pb-3" [formGroup]="searchForm" (ngSubmit)="getDeliveries()">
     <div class="col-md-3">
       <div class="form-group">
@@ -50,11 +63,12 @@
     <div class="col actions">
       <button
         type="button"
-        class="btn btn-success mx-2"
+        class="btn btn-secondary mx-2"
         placement="bottom"
-        ngbTooltip="Baixar planilha"
+        ngbTooltip="Enviar entregas"
+        (click)="upload()"
       >
-        <i class="fa fa-download"></i>
+        <i class="fa fa-upload"></i>
       </button>
       <button
         type="button"
@@ -69,7 +83,7 @@
   </form>
   <div class="row"></div>
   <div class="row">
-    <div class="col-12 text-center mb-2" *ngIf="deliveryList.length == 0">
+    <div class="col-md-12 text-center mb-2">
       <h4 *ngIf="initialDate && !finalDate">
         Exibindo de {{ formatDate(initialDate) }}
       </h4>
@@ -77,6 +91,14 @@
         Exibindo de {{ formatDate(initialDate) }} á
         {{ formatDate(finalDate) }}
       </h4>
+      <button
+        type="button"
+        class="btn btn-success mx-2"
+        placement="bottom"
+        ngbTooltip="Baixar planilha"
+      >
+        <i class="fa fa-download"></i>
+      </button>
     </div>
     <div class="col-md-12" *ngFor="let d of deliveryList; let i = index">
       <app-delivery [delivery]="d" [index]="i"></app-delivery>
@@ -86,3 +108,8 @@
     </div>
   </div>
 </div>
+
+<ngx-loading
+  [show]="loading"
+  [config]="{ backdropBorderRadius: '3px' }"
+></ngx-loading>

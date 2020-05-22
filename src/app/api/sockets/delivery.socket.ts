@@ -5,10 +5,9 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class ChatSocketService {
+export class DeliverySocket {
 
-  constructor(private socket: Socket
-  ) { }
+  constructor(private socket: Socket) { }
 
   getData(room) {
     return Observable.create(observer => {

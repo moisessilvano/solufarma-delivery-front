@@ -5,6 +5,10 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EditDeliveryModalComponent } from 'src/app/modals/edit-delivery-modal/edit-delivery-modal.component';
 import * as moment from 'moment';
+import { UploadModalComponent } from 'src/app/modals/upload-modal/upload-modal.component';
+import { DeliverySocket } from 'src/app/api/sockets/delivery.socket';
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-deliveries',
   templateUrl: './deliveries.component.html',
@@ -22,33 +26,69 @@ export class DeliveriesComponent implements OnInit {
   initialDate: string;
   finalDate: string;
 
+  loading: boolean;
+
+  uploadInfo = {
+    status: null,
+    qntAdded: 0,
+    qntUpdated: 0,
+    qntRemaining: 0,
+    count: 0,
+    qntNotUpdated: 0,
+    qntNotAdded: 0
+  };
+
   constructor(
     private deliveryService: DeliveryService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private deliverySocket: DeliverySocket,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit() {
-    this.getDeliveries();
-
-    const currentDate = moment();
+    const currentDate = moment('2020-03-03');
 
     this.initialDate = currentDate.format("YYYY-MM-DD");
 
     this.searchForm.patchValue({
       initialDate: this.initialDate,
       finalDate: '',
+    });
+
+    this.getDeliveries();
+
+    this.deliverySocket.getData('upload').subscribe(res => {
+      this.uploadInfo = res;
+    });
+
+    this.deliverySocket.getData('deliveries').subscribe(delivery => {
+
+      this.toastr.info('Foi entregue por ' + delivery.deliveredUser.name, 'Romaneio ' + delivery.orderCode);
+
+      if (moment(delivery) >= moment(this.initialDate)) {
+        this.deliveryList = this.deliveryList.map(d => {
+          if (d._id == delivery._id) {
+            return delivery;
+          }
+          return d;
+        })
+      }
     })
   }
 
   get f() { return this.searchForm.controls; }
 
   getDeliveries() {
+    this.loading = true;
     const { initialDate, finalDate } = this.searchForm.value;
     this.initialDate = initialDate;
     this.finalDate = finalDate;
 
     this.deliveryService.getByDate(this.searchForm.value).subscribe(res => {
       this.deliveryList = res;
+      this.loading = false;
+    }, err => {
+      this.loading = false;
     })
   }
 
@@ -57,6 +97,10 @@ export class DeliveriesComponent implements OnInit {
     modalRef.result.then(() => {
       this.getDeliveries();
     });
+  }
+
+  upload() {
+    this.modalService.open(UploadModalComponent);
   }
 
   formatDate(date) {
