@@ -22,4 +22,7 @@ export class DeliveryResponse {
     updateAt: string;
 
     receivedBy: string;
+
+    amountReceivable: number;
+    paymentMethod: 'money' | 'card';
 }

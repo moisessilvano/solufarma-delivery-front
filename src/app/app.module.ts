@@ -23,6 +23,9 @@ import { MotoboyComponent } from './pages/motoboy/motoboy.component';
 import { NgxLoadingModule } from 'ngx-loading';
 import { JwtModule } from "@auth0/angular-jwt";
 import { UploadModalComponent } from './modals/upload-modal/upload-modal.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { CurrencyMaskModule } from "ng2-currency-mask";
+import { DecimalPipe } from '@angular/common';
 
 const config: SocketIoConfig = {
   url: environment.apiUrl,
@@ -63,6 +66,8 @@ export function tokenGetter() {
         blacklistedRoutes: [],
       },
     }),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    CurrencyMaskModule
   ],
   providers: [
     {
@@ -70,6 +75,7 @@ export function tokenGetter() {
       useClass: HttpsRequestInterceptor,
       multi: true,
     },
+    DecimalPipe
   ],
   bootstrap: [AppComponent],
   entryComponents: [

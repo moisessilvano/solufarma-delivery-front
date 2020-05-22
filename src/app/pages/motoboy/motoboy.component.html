@@ -9,13 +9,14 @@
     [formGroup]="form"
     (ngSubmit)="searchRomaneio()"
     autocomplete="off"
+    *ngIf="!delivery"
   >
     <ngx-loading
       [show]="loading"
       [config]="{ backdropBorderRadius: '3px' }"
     ></ngx-loading>
 
-    <div class="col-md-6 offset-md-3" *ngIf="!delivery">
+    <div class="col-md-6 offset-md-3">
       <div class="form-group text-center">
         <div>
           <span>Olá, {{ decodeToken.name }}</span>
@@ -43,7 +44,7 @@
       </div>
     </div>
   </form>
-  <div class="row pt-2 text-center" *ngIf="delivery">
+  <div class="row text-center" *ngIf="delivery">
     <div class="col-12 pb-3">
       <h5>Dados da entrega</h5>
     </div>
@@ -59,26 +60,70 @@
     <div class="col-12 py-3" *ngIf="delivery.deliveredUser">
       Essa entrega foi concluida por
       <b>{{ delivery.deliveredUser.name }}</b> em
-      {{ formatDate(delivery.arrivalDate) }}
+      {{ formatDate(delivery.arrivalDateTime) }}
     </div>
-    <div class="col-12 py-2" *ngIf="!delivery.deliveredUser">
-      <div class="form-group">
-        <label>Recebido por:</label>
-        <input type="text" [(ngModel)]="receivedBy" class="form-control" />
-      </div>
-    </div>
-    <div class="col-12 py-2">
-      <button
-        class="btn btn-primary w-100"
-        (click)="completeDelivery()"
-        [disabled]="delivery.deliveredUser"
-      >
-        Confirmar Entrega
-      </button>
 
-      <div class="py-3">
-        <a href="#" (click)="goToSearch()">Voltar</a>
-      </div>
+    <div class="col-12">
+      <form
+        class="row"
+        [formGroup]="completeForm"
+        (ngSubmit)="completeDelivery()"
+        autocomplete="off"
+      >
+        <div class="col-12 py-2">
+          <div class="form-group">
+            <label>Recebido por:</label>
+            <input
+              type="text"
+              formControlName="receivedBy"
+              class="form-control"
+            />
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group">
+            <label>Valor a recebido:</label>
+            <div class="input-group mb-3">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="amountReceivable"
+                currencyMask
+                [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="col-12 mb-2"
+          *ngIf="completeForm.get('amountReceivable').value > 0"
+        >
+          <div
+            class="btn-group btn-group-toggle"
+            ngbRadioGroup
+            formControlName="paymentMethod"
+          >
+            <label ngbButtonLabel class="btn-secondary" form>
+              <input ngbButton type="radio" value="money" />Dinheiro
+            </label>
+            <label ngbButtonLabel class="btn-secondary">
+              <input ngbButton type="radio" value="card" /> Cartão
+            </label>
+          </div>
+        </div>
+        <div class="col-12 py-2">
+          <button
+            class="btn btn-primary w-100"
+            [disabled]="delivery.deliveredUser"
+          >
+            Confirmar Entrega
+          </button>
+
+          <button class="btn btn-secondary mt-3 w-100" (click)="goToSearch()">
+            Voltar
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

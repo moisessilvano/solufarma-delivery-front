@@ -8,6 +8,7 @@ import * as moment from 'moment';
 import { UploadModalComponent } from 'src/app/modals/upload-modal/upload-modal.component';
 import { DeliverySocket } from 'src/app/api/sockets/delivery.socket';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-deliveries',
@@ -38,6 +39,8 @@ export class DeliveriesComponent implements OnInit {
     qntNotAdded: 0
   };
 
+  isImcompleteData: boolean;
+
   constructor(
     private deliveryService: DeliveryService,
     private modalService: NgbModal,
@@ -46,7 +49,7 @@ export class DeliveriesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const currentDate = moment('2020-03-03');
+    const currentDate = moment();
 
     this.initialDate = currentDate.format("YYYY-MM-DD");
 
@@ -63,7 +66,9 @@ export class DeliveriesComponent implements OnInit {
 
     this.deliverySocket.getData('deliveries').subscribe(delivery => {
 
-      this.toastr.info('Foi entregue por ' + delivery.deliveredUser.name, 'Romaneio ' + delivery.orderCode);
+      if (delivery.status == 'delivered') {
+        this.toastr.info('Foi entregue por ' + delivery.deliveredUser.name, 'Romaneio ' + delivery.orderCode);
+      }
 
       if (moment(delivery) >= moment(this.initialDate)) {
         this.deliveryList = this.deliveryList.map(d => {
@@ -80,6 +85,7 @@ export class DeliveriesComponent implements OnInit {
 
   getDeliveries() {
     this.loading = true;
+    this.isImcompleteData = false;
     const { initialDate, finalDate } = this.searchForm.value;
     this.initialDate = initialDate;
     this.finalDate = finalDate;
@@ -87,6 +93,13 @@ export class DeliveriesComponent implements OnInit {
     this.deliveryService.getByDate(this.searchForm.value).subscribe(res => {
       this.deliveryList = res;
       this.loading = false;
+
+      this.deliveryList.map(d => {
+        if (!d.arrivalDateTime || !d.arrivalTemperature || !d.departureDateTime || !d.departureTemperature) {
+          this.isImcompleteData = true;
+        }
+      })
+
     }, err => {
       this.loading = false;
     })
@@ -107,4 +120,15 @@ export class DeliveriesComponent implements OnInit {
     return moment(date).format("DD-MM-YYYY");
   }
 
+  download() {
+    const { initialDate, finalDate } = this.searchForm.value;
+
+    if (initialDate && !finalDate) {
+      window.open(environment.apiUrl + '/api/deliveries/getByDate?initialDate=' + initialDate + '&finalDate=&exportFile=true')
+    }
+
+    if (initialDate && finalDate) {
+      window.open(environment.apiUrl + '/api/deliveries/getByDate?initialDate=' + initialDate + '&finalDate=' + finalDate + '&exportFile=true')
+    }
+  }
 }

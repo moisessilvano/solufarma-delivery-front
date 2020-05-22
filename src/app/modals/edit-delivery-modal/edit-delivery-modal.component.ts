@@ -19,12 +19,14 @@ export class EditDeliveryModalComponent implements OnInit {
     requestCode: new FormControl('', Validators.required),
     customerName: new FormControl('', Validators.required),
     fullAddress: new FormControl('', Validators.required),
-    departureDate: new FormControl(''),
-    departureTime: new FormControl(''),
+    departureDateTime: new FormControl(''),
     departureTemperature: new FormControl(''),
-    arrivalDate: new FormControl(''),
-    arrivalTime: new FormControl(''),
-    arrivalTemperature: new FormControl('')
+    arrivalDateTime: new FormControl(''),
+    arrivalTemperature: new FormControl(''),
+    status: new FormControl('pending'),
+    amountReceivable: new FormControl(''),
+    paymentMethod: new FormControl(''),
+    receivedBy: new FormControl(''),
   })
 
   loading: boolean;
@@ -47,15 +49,13 @@ export class EditDeliveryModalComponent implements OnInit {
 
       if (res.departureDateTime) {
         departure = {
-          departureDate: this.formatDate(res.departureDateTime),
-          departureTime: this.formatTime(res.departureDateTime),
+          departureDateTime: this.formatDateTime(res.departureDateTime),
         }
       }
 
       if (res.arrivalDateTime) {
         arrival = {
-          arrivalDate: this.formatDate(res.arrivalDateTime),
-          arrivalTime: this.formatTime(res.arrivalDateTime),
+          arrivalDateTime: this.formatDateTime(res.arrivalDateTime),
         }
       }
 
@@ -71,12 +71,12 @@ export class EditDeliveryModalComponent implements OnInit {
     });
   }
 
-  formatDate(date) {
-    return moment(date).format("YYYY-MM-DD")
+  formatDateTime(date) {
+    return moment(date).format("YYYY-MM-DDTHH:mm")
   }
 
-  formatTime(date) {
-    return moment(date).format("HH:mm")
+  formatDate(date) {
+    return moment(date).format("YYYY-MM-DD")
   }
 
   onSubmit() {
@@ -91,6 +91,7 @@ export class EditDeliveryModalComponent implements OnInit {
       this.deliveryService.update(this.id, this.form.value).subscribe(res => {
         this.toastr.success('Editado com sucesso');
         this.loading = false;
+        this.activeModal.close();
       }, err => {
         this.loading = false;
       })
@@ -98,6 +99,7 @@ export class EditDeliveryModalComponent implements OnInit {
       this.deliveryService.create(this.form.value).subscribe(res => {
         this.toastr.success('Cadastrado com sucesso');
         this.loading = false;
+        this.activeModal.close();
       }, err => {
         this.loading = false;
       })

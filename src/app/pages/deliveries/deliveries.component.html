@@ -96,9 +96,39 @@
         class="btn btn-success mx-2"
         placement="bottom"
         ngbTooltip="Baixar planilha"
+        (click)="download()"
+        *ngIf="deliveryList.length > 0"
       >
         <i class="fa fa-download"></i>
       </button>
+    </div>
+    <div
+      class="col-md-12 text-center text-danger mb-2"
+      *ngIf="isImcompleteData"
+    >
+      <b>Atenção:</b> Planilha de temperatura incompleta
+    </div>
+    <div
+      class="col-md-12 font-weight-bold my-2 pt-2"
+      *ngIf="deliveryList.length > 0"
+    >
+      <div class="row">
+        <div class="col-md-1">
+          ROMANEIO
+        </div>
+        <div class="col-md-3">
+          CLIENTE
+        </div>
+        <div class="col-md-4">
+          ENDEREÇO
+        </div>
+        <div class="col-md-1">
+          STATUS
+        </div>
+        <div class="col-md-3 text-center">
+          AÇÕES
+        </div>
+      </div>
     </div>
     <div class="col-md-12" *ngFor="let d of deliveryList; let i = index">
       <app-delivery [delivery]="d" [index]="i"></app-delivery>

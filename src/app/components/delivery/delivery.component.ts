@@ -3,6 +3,8 @@ import { DeliveryResponse } from 'src/app/api/models/response/delivery-response'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EditDeliveryModalComponent } from 'src/app/modals/edit-delivery-modal/edit-delivery-modal.component';
 import * as moment from 'moment';
+import { DeliveryService } from 'src/app/api/services/delivery.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-delivery',
@@ -14,7 +16,7 @@ export class DeliveryComponent implements OnInit {
   @Input() delivery: DeliveryResponse;
   @Input() index: number;
 
-  constructor(private modalService: NgbModal) { }
+  constructor(private modalService: NgbModal, private deliveryService: DeliveryService, private toastr: ToastrService) { }
 
   ngOnInit() {
 
@@ -25,12 +27,11 @@ export class DeliveryComponent implements OnInit {
     modalRef.componentInstance.id = id;
   }
 
-  cancel(id: string) {
-
-  }
-
-  enable(id: string) {
-
+  release(id: string) {
+    this.deliveryService.releaseDelivery(id).subscribe(() => {
+    }, err => {
+      this.toastr.error('Erro ao liberar!');
+    })
   }
 
   formatDate(date) {

@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-md-1 line text-center">
         {{ delivery.orderCode }}
-        <small>{{ formatDate(delivery.deliveryDate) }}</small>
+        <!-- <small>{{ formatDate(delivery.deliveryDate) }}</small> -->
       </div>
       <div class="col-md-3 line">
         {{ delivery.customerName }}
@@ -25,7 +25,7 @@
         <span
           *ngIf="delivery.status == 'motoboy'"
           class="status status--motoboy"
-          >COM MOTOBOY</span
+          >MOTOBOY</span
         >
         <span
           *ngIf="delivery.status == 'delivered'"
@@ -33,7 +33,7 @@
           >ENTREGUE</span
         >
       </div>
-      <div class="col-md-2 line actions">
+      <div class="col-md-3 line actions">
         <button
           class="btn btn-secondary"
           (click)="edit(delivery._id)"
@@ -41,6 +41,15 @@
           ngbTooltip="Editar"
         >
           <i class="fa fa-edit"></i>
+        </button>
+        <button
+          class="btn btn-success"
+          (click)="release(delivery._id)"
+          placement="bottom"
+          ngbTooltip="Liberar"
+          *ngIf="delivery.status == 'pending'"
+        >
+          <i class="fa fa-check-circle"></i>
         </button>
         <!-- <button
           class="btn btn-danger"

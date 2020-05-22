@@ -29,6 +29,10 @@ export class DeliveryService {
         return this.http.put<any>(`${this.apiUrl}/completeDelivery/${id}`, body);
     }
 
+    releaseDelivery(id: string) {
+        return this.http.put<any>(`${this.apiUrl}/releaseDelivery/${id}`, {});
+    }
+
     getByDate(params: any): Observable<DeliveryResponse[]> {
         return this.http.get<any>(`${this.apiUrl}/getByDate`, { params: params });
     }

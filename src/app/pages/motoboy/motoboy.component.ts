@@ -6,6 +6,7 @@ import { DeliveryResponse } from 'src/app/api/models/response/delivery-response'
 import * as moment from 'moment';
 import { TokenService } from 'src/app/services/token.service';
 import { AuthService } from 'src/app/api/services/auth.service';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-motoboy',
@@ -26,11 +27,18 @@ export class MotoboyComponent implements OnInit {
 
   receivedBy: string;
 
+  completeForm = new FormGroup({
+    amountReceivable: new FormControl(''),
+    paymentMethod: new FormControl(''),
+    receivedBy: new FormControl(''),
+  })
+
   constructor(
     private deliveryService: DeliveryService,
     private toastr: ToastrService,
     private tokenService: TokenService,
-    private authService: AuthService
+    private authService: AuthService,
+    private decimalPipe: DecimalPipe
   ) { }
 
   ngOnInit() {
@@ -63,13 +71,27 @@ export class MotoboyComponent implements OnInit {
   }
 
   completeDelivery() {
+    if (this.completeForm.invalid) {
+      this.toastr.error('Digite um número válido');
+      return;
+    }
+
+    const { amountReceivable, paymentMethod } = this.completeForm.value;
+    if (amountReceivable > 0) {
+      if (!paymentMethod) {
+        this.toastr.error('Selecione a forma de pagamento');
+        return;
+      }
+    }
+
     this.loading = true;
-    this.deliveryService.completeDelivery(this.delivery._id, {
-      receivedBy: this.receivedBy
-    }).subscribe(res => {
+    this.deliveryService.completeDelivery(this.delivery._id, this.completeForm.value).subscribe(res => {
       this.toastr.success('Entrega concluída com sucesso!');
       this.goToSearch();
       this.loading = false;
+
+      this.completeForm.reset();
+
     }, err => {
       this.toastr.error('Não foi possível concluir a entrega');
       this.loading = false;
@@ -78,9 +100,17 @@ export class MotoboyComponent implements OnInit {
 
   goToSearch() {
     this.delivery = null;
+    this.form.patchValue({
+      orderCode: ''
+    })
   }
 
   formatDate(date) {
     return moment(date).format("DD/MM/YYYY");
+  }
+
+  onBlur(event) {
+    if (event.target.value !== '')
+      event.target.value = parseFloat(event.target.value).toFixed(2)
   }
 }

@@ -106,29 +106,63 @@
             Insira o endereço de entrega
           </div>
         </div>
+        <div class="form-group">
+          <label>Status</label>
+          <select formControlName="status" class="form-control">
+            <option value="pending">Pendente</option>
+            <option value="motoboy">Com motoboy</option>
+            <option value="delivered">Entregue</option>
+            <option value="canceled">Cancelado</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Valor a receber</label>
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control"
+              formControlName="amountReceivable"
+              currencyMask
+              [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Forma de pagamento</label>
+          <select formControlName="paymentMethod" class="form-control">
+            <option value="money">Dinheiro</option>
+            <option value="card">Cartão</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label>Recebido por</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="receivedBy"
+          />
+        </div>
       </div>
     </div>
     <div class="row">
       <div class="col-12 text-center">
         <p>Informações de Saída</p>
       </div>
-      <div class="col-md-5">
+      <div class="col-md-9">
         <div class="form-group">
-          <label>Data</label>
+          <label>Data E Hora</label>
           <input
-            type="date"
+            type="datetime-local"
             class="form-control"
-            formControlName="departureDate"
-          />
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="form-group">
-          <label>Horário</label>
-          <input
-            type="time"
-            class="form-control"
-            formControlName="departureTime"
+            formControlName="departureDateTime"
           />
         </div>
       </div>
@@ -148,23 +182,13 @@
       <div class="col-12 text-center">
         <p>Informações de Entrega</p>
       </div>
-      <div class="col-md-5">
+      <div class="col-md-9">
         <div class="form-group">
-          <label>Data</label>
+          <label>Data E Hora</label>
           <input
-            type="date"
+            type="datetime-local"
             class="form-control"
-            formControlName="arrivalDate"
-          />
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="form-group">
-          <label>Horário</label>
-          <input
-            type="time"
-            class="form-control"
-            formControlName="arrivalTime"
+            formControlName="arrivalDateTime"
           />
         </div>
       </div>

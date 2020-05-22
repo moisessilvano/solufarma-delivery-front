@@ -13,8 +13,8 @@ export class LoginComponent implements OnInit {
   loading: boolean;
 
   form = new FormGroup({
-    username: new FormControl('moises', Validators.required),
-    password: new FormControl('moises', Validators.required)
+    username: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required)
   })
 
   constructor(
