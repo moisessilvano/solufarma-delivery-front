@@ -31,3 +31,29 @@ body {
   background-color: #ffffff;
   min-height: 100vh;
 }
+
+.status {
+  padding: 10px;
+  text-align: center;
+  font-size: 0.85rem;
+  border-radius: 10px;
+}
+
+.status--pending {
+  background-color: rgb(238, 238, 0);
+}
+
+.status--motoboy {
+  background-color: rgb(0, 99, 180);
+  color: #fff;
+}
+
+.status--delived {
+  background-color: rgb(0, 129, 9);
+  color: #fff;
+}
+
+.status--canceled {
+  background-color: #c82333;
+  color: #fff;
+}

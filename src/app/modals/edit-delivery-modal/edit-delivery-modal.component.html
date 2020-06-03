@@ -21,21 +21,12 @@
                 type="text"
                 class="form-control"
                 formControlName="orderCode"
-                [ngClass]="{
-                  'is-invalid': f.orderCode.errors && f.orderCode.touched
-                }"
               />
-              <div
-                class="invalid-feedback"
-                *ngIf="f.orderCode.errors && f.orderCode.errors.required"
-              >
-                Insira o número do romaneio
-              </div>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label>Número da requisição</label>
+              <label>Número da requisição *</label>
               <input
                 type="text"
                 class="form-control"
@@ -55,7 +46,7 @@
         </div>
 
         <div class="form-group">
-          <label>Data da entrega</label>
+          <label>Data da entrega *</label>
           <input
             type="date"
             class="form-control"
@@ -73,7 +64,7 @@
         </div>
 
         <div class="form-group">
-          <label id="customerName">Nome do cliente</label>
+          <label id="customerName">Nome do cliente *</label>
           <input
             type="text"
             class="form-control"
@@ -90,7 +81,7 @@
           </div>
         </div>
         <div class="form-group">
-          <label>Endereço completo</label>
+          <label>Endereço completo *</label>
           <textarea
             type="text"
             class="form-control"

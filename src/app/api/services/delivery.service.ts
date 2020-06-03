@@ -41,6 +41,10 @@ export class DeliveryService {
         return this.http.get<any>(`${this.apiUrl}/getByOrder/${orderCode}`);
     }
 
+    getByMotoboy(user: string): Observable<DeliveryResponse[]> {
+        return this.http.get<any>(`${this.apiUrl}/getByMotoboy/${user}`);
+    }
+
     getById(id: string): Observable<DeliveryResponse> {
         return this.http.get<any>(`${this.apiUrl}/${id}`);
     }

@@ -49,7 +49,7 @@
       <h5>Dados da entrega</h5>
     </div>
     <div class="col-12 py-1">
-      <b>{{ delivery.orderCode }}</b>
+      <b>REQ: {{ delivery.requestCode }}</b>
     </div>
     <div class="col-12 py-1">
       {{ delivery.customerName }}
@@ -57,13 +57,23 @@
     <div class="col-12 py-1">
       {{ delivery.fullAddress }}
     </div>
-    <div class="col-12 py-3" *ngIf="delivery.deliveredUser">
-      Essa entrega foi concluida por
-      <b>{{ delivery.deliveredUser.name }}</b> em
-      {{ formatDate(delivery.arrivalDateTime) }}
+
+    <div class="col-12 mt-3" *ngIf="delivery.status == 'pending'">
+      <h5>Essa entrega não foi liberada ainda, deseja liberar?</h5>
+      <button
+        class="btn btn-primary w-100 mt-3"
+        (click)="release(delivery._id)"
+      >
+        Liberar
+      </button>
     </div>
 
-    <div class="col-12">
+    <div class="col-12" *ngIf="delivery.status != 'pending'">
+      <div class="col-12 py-3" *ngIf="delivery.deliveredUser">
+        Essa entrega foi concluida por
+        <b>{{ delivery.deliveredUser.name }}</b> em
+        {{ formatDate(delivery.arrivalDateTime) }}
+      </div>
       <form
         class="row"
         [formGroup]="completeForm"
@@ -114,7 +124,7 @@
         <div class="col-12 py-2">
           <button
             class="btn btn-primary w-100"
-            [disabled]="delivery.deliveredUser"
+            [disabled]="delivery.status == 'delivered'"
           >
             Confirmar Entrega
           </button>
@@ -124,6 +134,54 @@
           </button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <div class="deliveries" *ngIf="!delivery">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center mb-3">
+          <h4>Entregas de hoje</h4>
+        </div>
+        <div class="col-12 text-center mb-3" *ngIf="deliveryList.length == 0">
+          Nenhum registro encontrado
+        </div>
+        <div class="col-12 mb-2" *ngFor="let d of deliveryList">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">
+                <div class="row">
+                  <div class="col-6">Req: {{ d.requestCode }}</div>
+                  <div class="col-6 text-right">
+                    <small>
+                      <span
+                        *ngIf="d.status == 'motoboy'"
+                        class="status status--motoboy"
+                        >A CAMINHO</span
+                      >
+                      <span
+                        *ngIf="d.status == 'delivered'"
+                        class="status status--delived"
+                        >ENTREGUE</span
+                      ></small
+                    >
+                  </div>
+                </div>
+              </h5>
+              <p class="card-text">{{ d.customerName }}</p>
+              <p class="card-text">{{ d.fullAddress }}</p>
+              <button
+                type="button"
+                class="btn btn-primary"
+                (click)="getById(d._id)"
+                *ngIf="d.status != 'delivered' && d.status != 'canceled'"
+              >
+                Confirmar Entrega
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

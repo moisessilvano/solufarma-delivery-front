@@ -15,7 +15,7 @@ export class EditDeliveryModalComponent implements OnInit {
 
   form = new FormGroup({
     deliveryDate: new FormControl('', Validators.required),
-    orderCode: new FormControl('', Validators.required),
+    orderCode: new FormControl(''),
     requestCode: new FormControl('', Validators.required),
     customerName: new FormControl('', Validators.required),
     fullAddress: new FormControl('', Validators.required),
@@ -93,6 +93,7 @@ export class EditDeliveryModalComponent implements OnInit {
         this.loading = false;
         this.activeModal.close();
       }, err => {
+        this.toastr.error('Não foi possível atualizar a entrega');
         this.loading = false;
       })
     } else {
@@ -101,6 +102,7 @@ export class EditDeliveryModalComponent implements OnInit {
         this.loading = false;
         this.activeModal.close();
       }, err => {
+        this.toastr.error('Não foi possível cadastrar a entrega');
         this.loading = false;
       })
     }

@@ -33,6 +33,8 @@ export class MotoboyComponent implements OnInit {
     receivedBy: new FormControl(''),
   })
 
+  deliveryList: DeliveryResponse[] = [];
+
   constructor(
     private deliveryService: DeliveryService,
     private toastr: ToastrService,
@@ -43,6 +45,7 @@ export class MotoboyComponent implements OnInit {
 
   ngOnInit() {
     this.decodeToken = this.tokenService.decokeToken();
+    this.getDeliveriesByMotoboy();
   }
 
   get f() { return this.form.controls; }
@@ -51,6 +54,23 @@ export class MotoboyComponent implements OnInit {
     this.loading = true;
     this.authService.logout();
   }
+
+  getDeliveriesByMotoboy() {
+    this.deliveryService.getByMotoboy(this.decodeToken._id).subscribe(res => {
+      this.deliveryList = res;
+    })
+  }
+
+  getById(id) {
+    this.deliveryService.getById(id).subscribe(res => {
+      this.delivery = res;
+      this.loading = false;
+    }, err => {
+      this.toastr.error('Não foi possível localizar a entrega');
+      this.loading = false;
+    })
+  }
+
 
   searchRomaneio() {
     if (this.form.invalid) {
@@ -91,6 +111,7 @@ export class MotoboyComponent implements OnInit {
       this.loading = false;
 
       this.completeForm.reset();
+      this.getDeliveriesByMotoboy();
 
     }, err => {
       this.toastr.error('Não foi possível concluir a entrega');
@@ -112,5 +133,21 @@ export class MotoboyComponent implements OnInit {
   onBlur(event) {
     if (event.target.value !== '')
       event.target.value = parseFloat(event.target.value).toFixed(2)
+  }
+
+  release(id: string) {
+    this.loading = true;
+
+    this.deliveryService.releaseDelivery(id, this.decodeToken._id).subscribe(() => {
+      this.toastr.success('Entrega liberada com sucesso!');
+      this.goToSearch();
+      this.loading = false;
+
+      this.completeForm.reset();
+      this.getDeliveriesByMotoboy();
+    }, err => {
+      this.loading = false;
+      this.toastr.error('Erro ao liberar!');
+    })
   }
 }

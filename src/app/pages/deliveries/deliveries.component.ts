@@ -68,6 +68,10 @@ export class DeliveriesComponent implements OnInit {
 
     this.deliverySocket.getData('upload').subscribe(res => {
       this.uploadInfo = res;
+
+      if (this.uploadInfo.qntRemaining == 0) {
+        this.getDeliveries();
+      }
     });
 
     this.deliverySocket.getData('deliveries').subscribe(delivery => {
