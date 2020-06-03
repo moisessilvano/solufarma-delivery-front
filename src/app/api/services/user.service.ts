@@ -27,6 +27,10 @@ export class UserService {
         return this.http.get<any>(`${this.apiUrl}`, { params });
     }
 
+    getByType(motoboy: string): Observable<UserResponse[]> {
+        return this.http.get<any>(`${this.apiUrl}/getByType/${motoboy}`);
+    }
+
     getById(id: string): Observable<UserResponse> {
         return this.http.get<any>(`${this.apiUrl}/${id}`);
     }

@@ -9,6 +9,8 @@ import { UploadModalComponent } from 'src/app/modals/upload-modal/upload-modal.c
 import { DeliverySocket } from 'src/app/api/sockets/delivery.socket';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
+import { UserService } from 'src/app/api/services/user.service';
+import { UserResponse } from 'src/app/api/models/response/user-response';
 
 @Component({
   selector: 'app-deliveries',
@@ -41,11 +43,14 @@ export class DeliveriesComponent implements OnInit {
 
   isImcompleteData: boolean;
 
+  motoboyList: UserResponse[] = [];
+
   constructor(
     private deliveryService: DeliveryService,
     private modalService: NgbModal,
     private deliverySocket: DeliverySocket,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private userService: UserService
   ) { }
 
   ngOnInit() {
@@ -58,6 +63,7 @@ export class DeliveriesComponent implements OnInit {
       finalDate: '',
     });
 
+    this.getMotoboys();
     this.getDeliveries();
 
     this.deliverySocket.getData('upload').subscribe(res => {
@@ -82,6 +88,10 @@ export class DeliveriesComponent implements OnInit {
   }
 
   get f() { return this.searchForm.controls; }
+
+  getMotoboys() {
+    this.userService.getByType('motoboy').subscribe(res => this.motoboyList = res);
+  }
 
   getDeliveries() {
     this.loading = true;
@@ -113,7 +123,10 @@ export class DeliveriesComponent implements OnInit {
   }
 
   upload() {
-    this.modalService.open(UploadModalComponent);
+    const modalRef = this.modalService.open(UploadModalComponent);
+    modalRef.result.then(() => {
+      this.getDeliveries();
+    });
   }
 
   formatDate(date) {

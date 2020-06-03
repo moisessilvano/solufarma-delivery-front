@@ -29,8 +29,8 @@ export class DeliveryService {
         return this.http.put<any>(`${this.apiUrl}/completeDelivery/${id}`, body);
     }
 
-    releaseDelivery(id: string) {
-        return this.http.put<any>(`${this.apiUrl}/releaseDelivery/${id}`, {});
+    releaseDelivery(id: string, deliveredUser: string) {
+        return this.http.put<any>(`${this.apiUrl}/releaseDelivery/${id}`, { deliveredUser });
     }
 
     getByDate(params: any): Observable<DeliveryResponse[]> {

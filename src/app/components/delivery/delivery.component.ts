@@ -5,6 +5,8 @@ import { EditDeliveryModalComponent } from 'src/app/modals/edit-delivery-modal/e
 import * as moment from 'moment';
 import { DeliveryService } from 'src/app/api/services/delivery.service';
 import { ToastrService } from 'ngx-toastr';
+import { FormControl } from '@angular/forms';
+import { UserResponse } from 'src/app/api/models/response/user-response';
 
 @Component({
   selector: 'app-delivery',
@@ -15,6 +17,11 @@ export class DeliveryComponent implements OnInit {
 
   @Input() delivery: DeliveryResponse;
   @Input() index: number;
+  @Input() motoboyList: UserResponse[];
+
+  motoboy: string = '';
+
+  loadingRealese: boolean = false;
 
   constructor(private modalService: NgbModal, private deliveryService: DeliveryService, private toastr: ToastrService) { }
 
@@ -28,8 +35,16 @@ export class DeliveryComponent implements OnInit {
   }
 
   release(id: string) {
-    this.deliveryService.releaseDelivery(id).subscribe(() => {
+    if (!this.motoboy || this.motoboy == '') {
+      this.toastr.error('Selecione um motoboy para liberar entrega');
+      return;
+    }
+    this.loadingRealese = true;
+
+    this.deliveryService.releaseDelivery(id, this.motoboy).subscribe(() => {
+      this.loadingRealese = false;
     }, err => {
+      this.loadingRealese = false;
       this.toastr.error('Erro ao liberar!');
     })
   }

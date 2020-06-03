@@ -2,15 +2,12 @@
   <div class="col-12">
     <div class="row">
       <div class="col-md-1 line text-center">
-        {{ delivery.orderCode }}
-      </div>
-      <div class="col-md-1 line text-center">
         {{ delivery.requestCode }}
       </div>
       <div class="col-md-3 line">
         {{ delivery.customerName }}
       </div>
-      <div class="col-md-3 line">
+      <div class="col-md-4 line">
         {{ delivery.fullAddress }}
       </div>
       <div class="col-md-1 line">
@@ -36,46 +33,52 @@
         >
       </div>
       <div class="col-md-3 line actions">
-        <button
-          class="btn btn-secondary"
-          (click)="edit(delivery._id)"
-          placement="bottom"
-          ngbTooltip="Editar"
-        >
-          <i class="fa fa-edit"></i>
-        </button>
-        <button
-          class="btn btn-success"
-          (click)="release(delivery._id)"
-          placement="bottom"
-          ngbTooltip="Liberar"
-          *ngIf="delivery.status == 'pending'"
-        >
-          <i class="fa fa-check-circle"></i>
-        </button>
-        <!-- <button
-          class="btn btn-danger"
-          (click)="cancel(delivery._id)"
-          placement="bottom"
-          ngbTooltip="Cancelar"
-          *ngIf="delivery.status != 'canceled'"
-        >
-          <i class="fa fa-ban"></i>
-        </button>
-        <button
-          class="btn btn-primary"
-          (click)="enable(delivery._id)"
-          placement="bottom"
-          ngbTooltip="Habilitar"
-          *ngIf="delivery.status == 'canceled'"
-        >
-          <i class="fa fa-check-circle"></i>
-        </button> -->
+        <div class="row pb-3">
+          <div class="col">
+            <button
+              class="btn btn-secondary"
+              (click)="edit(delivery._id)"
+              placement="bottom"
+              ngbTooltip="Editar"
+            >
+              <i class="fa fa-edit"></i>
+            </button>
+          </div>
+        </div>
+        <div class="row" *ngIf="delivery.status == 'pending'">
+          <div class="col">
+            <div class="form-group" *ngIf="!loadingRealese">
+              <div class="input-group mb-3">
+                <select [(ngModel)]="motoboy" class="form-control">
+                  <option value="" selected disabled>Selecione</option>
+                  <option
+                    *ngFor="let motoboy of motoboyList"
+                    [value]="motoboy._id"
+                    >{{ motoboy.name }}</option
+                  >
+                </select>
+                <div class="input-group-append">
+                  <button
+                    class="btn btn-success"
+                    (click)="release(delivery._id)"
+                    placement="bottom"
+                    ngbTooltip="Liberar"
+                  >
+                    <i class="fa fa-check-circle"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="loadingRealese">
+              Carregando...
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
   <div class="col-12 text-center py-1" *ngIf="delivery.deliveredUser">
-    <small> Entregue por {{ delivery.deliveredUser.name }} </small>
+    <small> Motoboy: {{ delivery.deliveredUser.name }} </small>
     <small *ngIf="delivery.receivedBy">
       | Recebido por {{ delivery.receivedBy }}
     </small>
