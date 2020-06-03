@@ -38,11 +38,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.form.value).subscribe(res => {
       this.loading = false;
     }, err => {
-      this.loading = false;
-      const { error } = err;
-      if (error && error.message) {
-        this.toastr.error(error.message);
-      }
+      this.toastr.error('Verifique seus dados', 'Não foi possível efetuar login');
     })
   }
 

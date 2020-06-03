@@ -76,7 +76,7 @@ export class EditDeliveryModalComponent implements OnInit {
   }
 
   formatDate(date) {
-    return moment(date).format("YYYY-MM-DD")
+    return moment(date).add(1, 'days').format("YYYY-MM-DD");
   }
 
   onSubmit() {

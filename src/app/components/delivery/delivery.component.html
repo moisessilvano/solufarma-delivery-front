@@ -3,12 +3,14 @@
     <div class="row">
       <div class="col-md-1 line text-center">
         {{ delivery.orderCode }}
-        <!-- <small>{{ formatDate(delivery.deliveryDate) }}</small> -->
+      </div>
+      <div class="col-md-1 line text-center">
+        {{ delivery.requestCode }}
       </div>
       <div class="col-md-3 line">
         {{ delivery.customerName }}
       </div>
-      <div class="col-md-4 line">
+      <div class="col-md-3 line">
         {{ delivery.fullAddress }}
       </div>
       <div class="col-md-1 line">
@@ -75,7 +77,15 @@
   <div class="col-12 text-center py-1" *ngIf="delivery.deliveredUser">
     <small> Entregue por {{ delivery.deliveredUser.name }} </small>
     <small *ngIf="delivery.receivedBy">
-      / Recebido por {{ delivery.receivedBy }}
+      | Recebido por {{ delivery.receivedBy }}
+    </small>
+    <small *ngIf="delivery.paymentMethod">
+      | Pagamento em
+      <span *ngIf="delivery.paymentMethod == 'money'">Dinheiro</span
+      ><span *ngIf="delivery.paymentMethod == 'card'">Cartão</span>
+    </small>
+    <small *ngIf="delivery.amountReceivable">
+      | Valor R${{ delivery.amountReceivable }}
     </small>
   </div>
 </div>
