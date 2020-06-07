@@ -24,6 +24,8 @@ export class DeliveriesComponent implements OnInit {
   searchForm = new FormGroup({
     initialDate: new FormControl('', Validators.required),
     finalDate: new FormControl(''),
+    customerName: new FormControl(''),
+    requestCode: new FormControl(''),
   })
 
   initialDate: string;
@@ -61,6 +63,8 @@ export class DeliveriesComponent implements OnInit {
     this.searchForm.patchValue({
       initialDate: this.initialDate,
       finalDate: '',
+      customerName: '',
+      requestCode: '',
     });
 
     this.getMotoboys();
@@ -99,14 +103,14 @@ export class DeliveriesComponent implements OnInit {
 
   getDeliveries() {
     this.loading = true;
-    this.isImcompleteData = false;
     const { initialDate, finalDate } = this.searchForm.value;
     this.initialDate = initialDate;
     this.finalDate = finalDate;
 
-    this.deliveryService.getByDate(this.searchForm.value).subscribe(res => {
+    this.deliveryService.getByParams(this.searchForm.value).subscribe(res => {
       this.deliveryList = res;
       this.loading = false;
+      this.isImcompleteData = false;
 
       this.deliveryList.map(d => {
         if (!d.arrivalDateTime || !d.arrivalTemperature || !d.departureDateTime || !d.departureTemperature) {
@@ -116,7 +120,20 @@ export class DeliveriesComponent implements OnInit {
 
     }, err => {
       this.loading = false;
+      const { error } = err;
+      if (error && error.message) {
+        this.toastr.error(error.message);
+      }
     })
+  }
+
+  clearFilter() {
+    this.searchForm.patchValue({
+      initialDate: '',
+      finalDate: '',
+      customerName: '',
+      requestCode: '',
+    });
   }
 
   add() {

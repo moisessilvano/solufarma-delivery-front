@@ -9,7 +9,7 @@ import { MotoboyComponent } from './pages/motoboy/motoboy.component';
 
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: '', component: DeliveriesComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'users', component: UsersComponent, canActivate: [AuthGuard] },
   { path: 'deliveries', component: DeliveriesComponent, canActivate: [AuthGuard] },

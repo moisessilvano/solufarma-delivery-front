@@ -22,44 +22,7 @@
       {{ uploadInfo.qntUpdated }} ATUALIZADO(S)
     </div>
   </div>
-  <form class="row pb-3" [formGroup]="searchForm" (ngSubmit)="getDeliveries()">
-    <div class="col-md-3">
-      <div class="form-group">
-        <label>Data Inicial</label>
-        <input
-          type="date"
-          class="form-control"
-          formControlName="initialDate"
-          [ngClass]="{
-            'is-invalid': f.initialDate.errors && f.initialDate.touched
-          }"
-        />
-        <div
-          class="invalid-feedback"
-          *ngIf="f.initialDate.errors && f.initialDate.errors.required"
-        >
-          Insira data uma data
-        </div>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="form-group">
-        <label>Data Final</label>
-        <div class="input-group mb-3">
-          <input type="date" class="form-control" formControlName="finalDate" />
-          <div class="input-group-append">
-            <button
-              class="btn btn-secondary"
-              type="submit"
-              placement="bottom"
-              ngbTooltip="Pesquisar"
-            >
-              <i class="fa fa-search"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div class="row">
     <div class="col actions">
       <button
         type="button"
@@ -80,8 +43,66 @@
         <i class="fa fa-plus"></i>
       </button>
     </div>
+  </div>
+  <form class="row pb-3" [formGroup]="searchForm" (ngSubmit)="getDeliveries()">
+    <div class="col-md-3">
+      <div class="form-group">
+        <label>Data Inicial</label>
+        <input type="date" class="form-control" formControlName="initialDate" />
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+        <label>Data Final</label>
+        <div class="input-group mb-3">
+          <input type="date" class="form-control" formControlName="finalDate" />
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+        <label>Nome do cliente</label>
+        <div class="input-group mb-3">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="customerName"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+        <label>Requsição</label>
+        <div class="input-group mb-3">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="requestCode"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="col actions">
+      <button
+        class="btn btn-danger"
+        type="button"
+        placement="bottom"
+        ngbTooltip="Pesquisar"
+        (click)="clearFilter()"
+      >
+        <i class="fa fa-trash"></i> Limpar filtros
+      </button>
+      <button
+        class="btn btn-primary"
+        type="submit"
+        placement="bottom"
+        ngbTooltip="Pesquisar"
+      >
+        <i class="fa fa-search"></i> Procurar
+      </button>
+    </div>
   </form>
-  <div class="row"></div>
   <div class="row">
     <div class="col-md-12 text-center mb-2">
       <h4 *ngIf="initialDate && !finalDate">
@@ -102,6 +123,8 @@
         <i class="fa fa-download"></i>
       </button>
     </div>
+  </div>
+  <div class="row">
     <div
       class="col-md-12 text-center text-danger mb-2"
       *ngIf="isImcompleteData"
